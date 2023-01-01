@@ -5,8 +5,8 @@ node{
     echo "maven home is ${mavenHome}"
     
     echo " build no is ${BUILD_NUMBER}"
-    echo " build name is ${BUILD_NAME}"
-    echo " JOB NAME IS ${JOB_NAME}"
+    echo " build name is ${JOB_NAME}"
+    
     
     properties([buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '5', daysToKeepStr: '', numToKeepStr: '5')), pipelineTriggers([pollSCM('* * * * *')])])
     
