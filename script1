@@ -4,6 +4,8 @@ node{
     
     echo "maven home is ${mavenHome}"
     
+    properties([buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '5', daysToKeepStr: '', numToKeepStr: '5')), pipelineTriggers([pollSCM('* * * * *')])])
+    
     stage("checkout"){
         git branch: 'development', url: 'https://github.com/UdaySreddy/maven-web-application.git'
     }
