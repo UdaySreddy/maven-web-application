@@ -28,8 +28,6 @@ node{
     stage("deploy tomcat"){
         
         sshagent(['ec2-user']) {
-            def serveAd = "ssh -o StrictHostKeyChecking=no ec2-user@172.31.38.45"
-            sh "${serveAd} whoami"
             sh "scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@172.31.38.45:/opt/tomcat/webapps"
     // some block
 }
