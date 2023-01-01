@@ -1,0 +1,32 @@
+node{
+    
+    def mavenHome = tool name:"MAVEN3.8.6"
+    
+    echo "maven home is ${mavenHome}"
+    
+    stage("checkout"){
+        git branch: 'development', url: 'https://github.com/UdaySreddy/maven-web-application.git'
+    }
+    
+    stage("build"){
+        
+        sh "${mavenHome}/bin/mvn clean package"
+    }
+    stage("sonar report"){
+        sh "${mavenHome}/bin/mvn sonar:sonar"
+    }
+    
+    stage("nexus upload"){
+        sh "${mavenHome}/bin/mvn deploy"
+    }
+    stage("deploy tomcat"){
+        
+        sshagent(['ec2-user']) {
+            def serveAd = "ssh -o StrictHostKeyChecking=no ec2-user@172.31.38.45"
+            sh "${serveAd} whoami"
+            sh "scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@172.31.38.45:/opt/tomcat/webapps"
+    // some block
+}
+    }
+    
+}
